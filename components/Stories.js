@@ -8,7 +8,7 @@ function Stories() {
   useEffect(() => {
     const suggestions = [...Array(20)].map((_, i) => ({
       ...faker.helpers.contextualCard(),
-      id: 1,
+      id: i,
     }))
     setSuggestions(suggestions)
     console.log(suggestions)
