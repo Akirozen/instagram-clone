@@ -9,7 +9,7 @@ import {
   MenuIcon,
 } from '@heroicons/react/outline'
 import { HomeIcon } from '@heroicons/react/solid'
-import { useSession } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 function Header() {
   const { data: session } = useSession()
@@ -22,7 +22,7 @@ function Header() {
         {/* left */}
         <div className="relative hidden lg:inline-grid w-24  cursor-pointer">
           <Image
-            src="/images/Instagram_logo.svg"
+            src="/images/insta-text.svg"
             alt="logo"
             layout="fill"
             objectFit="contain"
@@ -56,23 +56,30 @@ function Header() {
         <div className="flex items-center justify-end space-x-4">
           <HomeIcon className="navBtn" />
           <MenuIcon className="h-6 md:hidden cursor-pointer" />
-          <div className="relative navBtn">
-            <PaperAirplaneIcon className="navBtn rotate-45" />
-            <div className="absolute -top-1 -right-2 text-xs w-5 h-5 bg-red-500 rounded-full flex items-center justify-center animate-pulse text-white">
-              3
-            </div>
-          </div>
+          {session ? (
+            <>
+              <div className="relative navBtn">
+                <PaperAirplaneIcon className="navBtn rotate-45" />
+                <div className="absolute -top-1 -right-2 text-xs w-5 h-5 bg-red-500 rounded-full flex items-center justify-center animate-pulse text-white">
+                  3
+                </div>
+              </div>
 
-          <PlusCircleIcon className="navBtn" />
-          <UserGroupIcon className="navBtn" />
-          <HeartIcon className="navBtn" />
-          <img
-            className="h-10 rounded-full cursor-pointer"
-            src={session?.user?.image}
-            alt="avatar"
-            // layout="fill"
-            // objectFit="contain"
-          />
+              <PlusCircleIcon className="navBtn" />
+              <UserGroupIcon className="navBtn" />
+              <HeartIcon className="navBtn" />
+              <img
+                onClick={signOut}
+                className="h-10 rounded-full cursor-pointer"
+                src={session.user.image}
+                alt="avatar"
+                // layout="fill"
+                // objectFit="contain"
+              />
+            </>
+          ) : (
+            <button onClick={signIn}>Sign In</button>
+          )}
         </div>
       </div>
     </div>
