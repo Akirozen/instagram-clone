@@ -19,6 +19,8 @@ function Header() {
   const router = useRouter()
   const [open, setOpen] = useRecoilState(modalState)
 
+  console.log(session)
+
   return (
     <div className="shadow-sm border-b bg-white sticky top-0 z-50">
       <div className=" flex justify-between bg-white max-w-6xl mx-5 lg:mx-auto">
@@ -78,9 +80,9 @@ function Header() {
               <UserGroupIcon className="navBtn" />
               <HeartIcon className="navBtn" />
               <img
-                onClick={signOut}
+                // onClick={signOut}
                 className="h-10 rounded-full cursor-pointer"
-                src={session.user.image}
+                src={session?.user?.image}
                 alt="avatar"
                 // layout="fill"
                 // objectFit="contain"
