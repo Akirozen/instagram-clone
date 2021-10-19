@@ -13,6 +13,22 @@ function Posts() {
         setPosts(snapshot.docs)
       }
     )
+
+    //! implement this one
+    // const q = query(
+    //   collection(db, 'posts', id, 'comments'),
+    //   orderBy('timeStamp', 'desc')
+    // )
+
+    // const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    //   const comments = []
+    //   querySnapshot.forEach((doc) => {
+    //     comments.push(doc.data())
+    //   })
+    //   setComments(comments)
+
+    //   return unsubscribe
+    // })
   }, [db])
 
   console.log(posts)
