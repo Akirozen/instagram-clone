@@ -10,6 +10,7 @@ import {
   orderBy,
   query,
   serverTimestamp,
+  setDoc,
 } from '@firebase/firestore'
 
 import {
@@ -26,7 +27,9 @@ function Post({ id, username, userImg, img, caption }) {
   const { data: session } = useSession()
   const [comment, setComment] = useState('')
   const [comments, setComments] = useState([])
+  const [likes, setLikes] = useState([])
 
+  // Comment functionallity
   useEffect(() => {
     const q = query(
       collection(db, 'posts', id, 'comments'),
@@ -42,7 +45,7 @@ function Post({ id, username, userImg, img, caption }) {
 
       return unsubscribe
     })
-  }, [db])
+  }, [db, id])
 
   const sendComment = async (e) => {
     e.preventDefault()
@@ -57,6 +60,29 @@ function Post({ id, username, userImg, img, caption }) {
       timeStamp: serverTimestamp(),
     })
   }
+
+  // Likes functionality
+  useEffect(() => {
+    const q = query(collection(db, 'posts', id, 'likes'))
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const likes = []
+      querySnapshot.forEach((doc) => {
+        likes.push(doc.data())
+      })
+      setLikes(likes)
+
+      return unsubscribe
+    })
+  }, [db, id])
+
+  const likePost = async () => {
+    await setDoc(doc(db, 'posts', id, 'likes', session.user.uid), {
+      username: session.user.username,
+    })
+  }
+
+  console.log(likes)
 
   return (
     <div className="bg-white my-7 border rounded-sm">
@@ -78,7 +104,7 @@ function Post({ id, username, userImg, img, caption }) {
       {session && (
         <div className="flex justify-between px-4 py-4">
           <div className="flex space-x-4">
-            <HeartIcon className="btn" />
+            <HeartIcon className="btn" onClick={likePost} />
             <ChatIcon className="btn" />
             <PaperAirplaneIcon className="btn" />
           </div>
