@@ -11,6 +11,7 @@ import {
   query,
   serverTimestamp,
   setDoc,
+  deleteDoc,
 } from '@firebase/firestore'
 
 import {
@@ -28,6 +29,7 @@ function Post({ id, username, userImg, img, caption }) {
   const [comment, setComment] = useState('')
   const [comments, setComments] = useState([])
   const [likes, setLikes] = useState([])
+  const [hasLiked, setHasLiked] = useState(false)
 
   // Comment functionallity
   useEffect(() => {
@@ -63,24 +65,28 @@ function Post({ id, username, userImg, img, caption }) {
 
   // Likes functionality
   useEffect(() => {
-    const q = query(collection(db, 'posts', id, 'likes'))
-
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const likes = []
-      querySnapshot.forEach((doc) => {
-        likes.push(doc.data())
-      })
-      setLikes(likes)
-
-      return unsubscribe
-    })
+    onSnapshot(collection(db, 'posts', id, 'likes'), (snapshot) =>
+      setLikes(snapshot.docs)
+    )
   }, [db, id])
 
+  useEffect(() => {
+    setHasLiked(
+      likes.findIndex((like) => like.id === session?.user?.uid) !== -1
+    )
+  }, [likes])
+
   const likePost = async () => {
-    await setDoc(doc(db, 'posts', id, 'likes', session.user.uid), {
-      username: session.user.username,
-    })
+    if (hasLiked) {
+      await deleteDoc(doc(db, 'posts', id, 'likes', session.user.uid))
+    } else {
+      await setDoc(doc(db, 'posts', id, 'likes', session.user.uid), {
+        username: session.user.username,
+      })
+    }
   }
+
+  console.log(hasLiked)
 
   console.log(likes)
 
