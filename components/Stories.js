@@ -4,16 +4,21 @@ import Story from './Story'
 import { useSession } from 'next-auth/react'
 
 function Stories() {
-  const [suggestions, setSuggestions] = useState([])
+
+  const [suggestionsName, setSuggestionsName] = useState([])
+  const avatar=faker.image.people()
+
   const { data: session } = useSession()
 
   useEffect(() => {
-    const suggestions = [...Array(20)].map((_, i) => ({
+    const suggestionsName = [...Array(10)].map((_, i) => ({
       ...faker.helpers.contextualCard(),
       id: i,
     }))
-    setSuggestions(suggestions)
-    console.log(suggestions)
+    setSuggestionsName(suggestionsName)
+
+    console.log("USER SUGGESTIONS",suggestionsName)
+
   }, [])
 
   return (
@@ -21,10 +26,10 @@ function Stories() {
       {session && (
         <Story img={session.user.image} username={session.user.username} />
       )}
-      {suggestions.map((profile) => (
+      {suggestionsName.map((profile) => (
         <Story
           key={profile.username}
-          img={profile.avatar}
+          img={avatar}
           username={profile.username}
         />
       ))}

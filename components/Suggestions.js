@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import faker from 'faker'
+import {findRenderedDOMComponentWithClass} from "react-dom/test-utils";
 
 function Suggestions() {
   const [suggestions, setSuggestions] = useState([])
+  const avatar=faker.image.people()
+
+
+  console.log(faker.helpers.userCard())
 
   useEffect(() => {
+
     const suggestions = [...Array(5)].map((_, i) => ({
       ...faker.helpers.contextualCard(),
       id: i,
@@ -12,6 +18,7 @@ function Suggestions() {
     setSuggestions(suggestions)
     console.log(suggestions)
   }, [])
+
 
   return (
     <div className="mt-4 ml-10">
@@ -26,7 +33,7 @@ function Suggestions() {
           className="flex items-center justify-between mt-3"
         >
           <img
-            src={profile.avatar}
+            src={avatar}
             alt=""
             className="w-10 h-10 rounded-full border p-[2px]"
           />
@@ -44,3 +51,5 @@ function Suggestions() {
 }
 
 export default Suggestions
+
+

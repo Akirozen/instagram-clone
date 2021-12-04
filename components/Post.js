@@ -22,6 +22,7 @@ import {
   HeartIcon,
   PaperAirplaneIcon,
 } from '@heroicons/react/outline'
+
 import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid'
 
 function Post({ id, username, userImg, img, caption }) {
@@ -86,10 +87,6 @@ function Post({ id, username, userImg, img, caption }) {
     }
   }
 
-  console.log(hasLiked)
-
-  console.log(likes)
-
   return (
     <div className="bg-white my-7 border rounded-sm">
       {/* Header */}
@@ -126,13 +123,13 @@ function Post({ id, username, userImg, img, caption }) {
       )}
 
       {/* captions */}
-      <p className="p-5 truncate">
+      <h4 className="p-5 truncate">
         {likes.length > 0 && (
           <p className="font-bold mb-1">{likes.length} likes</p>
         )}
         <span className="font-bold mr-2">{username}</span>
         {caption}
-      </p>
+      </h4>
 
       {/* comments */}
       {comments.length > 0 && (
