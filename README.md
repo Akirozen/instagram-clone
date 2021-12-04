@@ -7,7 +7,7 @@ All the data are saved in Firebase database.
 The styling of the components are done using Tailwin CSS.
 
 ## Preview
-Preview the example live on [Vercel](https://instagram-clone-48kc65o7s-saimirbaraj.vercel.app/):
+Preview the example live on [Vercel](https://instagram-clone-iod8rw4l2-saimirbaraj.vercel.app/):
 
 ## Use this project on your own.
 Clone this repository and run the command in your terminal
