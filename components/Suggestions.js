@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import faker from 'faker'
-import {findRenderedDOMComponentWithClass} from "react-dom/test-utils";
 
 function Suggestions() {
   const [suggestions, setSuggestions] = useState([])
   const avatar=faker.image.people()
 
-
-  console.log(faker.helpers.userCard())
 
   useEffect(() => {
 
@@ -16,7 +13,6 @@ function Suggestions() {
       id: i,
     }))
     setSuggestions(suggestions)
-    console.log(suggestions)
   }, [])
 
 

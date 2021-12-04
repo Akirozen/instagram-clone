@@ -17,7 +17,7 @@ function Stories() {
     }))
     setSuggestionsName(suggestionsName)
 
-    console.log("USER SUGGESTIONS",suggestionsName)
+    // console.log("USER SUGGESTIONS",suggestionsName)
 
   }, [])
 
